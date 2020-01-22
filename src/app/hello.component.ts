@@ -1,4 +1,5 @@
 import { Component, Input, HostListener } from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'hello',
@@ -6,6 +7,7 @@ import { Component, Input, HostListener } from '@angular/core';
   styles: [`h1 { font-family: Lato; }`]
 })
 export class HelloComponent  {
+
   @HostListener('window:keydown', ['$event'])
   keyDown(event: KeyboardEvent) {
 		if (event.keyCode === 13)
@@ -16,4 +18,6 @@ export class HelloComponent  {
 	}
 
   @Input() name: string;
+
+  
 }
