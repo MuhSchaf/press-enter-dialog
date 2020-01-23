@@ -12,6 +12,7 @@ export class AppComponent  {
 
   constructor(public dialog: MatDialog) {}
     openDialog() : void {
+      this.name = 'Muh'
       console.log("app openDialog");
       const dialogRef = this.dialog.open(Dialog1Component, {
         width: '250px',

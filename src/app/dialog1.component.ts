@@ -13,7 +13,7 @@ export class Dialog1Component {
 
   @HostListener('window:keydown', ['$event'])
   keyDown(event: KeyboardEvent) {
-    if (event.keyCode === 13) {
+    if (event.keyCode === 13 &&  this.checkIfYouAreMeant()) {
       event.stopImmediatePropagation();
       this.onNoClick();
     }
@@ -22,7 +22,10 @@ export class Dialog1Component {
   constructor(
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<Dialog1Component>,
-    @Inject(MAT_DIALOG_DATA) data: string) {}
+    @Inject(MAT_DIALOG_DATA) public data: string) {
+      console.log("dialog 1 " + data);
+      this.name = data;
+    }
 
   onNoClick(): void {
     console.log("dialog 1 clicked");
@@ -35,11 +38,18 @@ export class Dialog1Component {
   
 
   openDialog() : void {
-    this.name = "muh";
     console.log("dialog 1 openDialog");
     const dialogRef = this.dialog.open(Dialog2Component, {
       width: '150px',
-      data: this.name
+      data: 'Kuh'
     });
+  }
+
+  private checkIfYouAreMeant(): boolean {
+
+    const length = document.getElementsByClassName('mat-dialog-title').length;
+    const title = document.getElementsByClassName('mat-dialog-title')[length-1].innerHTML;
+    console.log('title ' + title + ' name ' + this.name);
+    return title === this.name;
   }
  }

@@ -12,7 +12,12 @@ export class Dialog2Component {
 
   @HostListener('window:keydown', ['$event'])
   keyDown(event: KeyboardEvent) {
-    if (event.keyCode === 13) {
+      console.log('dialog 2 ' + this.checkIfYouAreMeant());
+
+    if (event.keyCode === 13 &&  this.checkIfYouAreMeant()) {
+
+      console.log('dialog 2 ' + this.checkIfYouAreMeant());
+
       event.stopImmediatePropagation();
       this.onNoClick();
     }
@@ -21,14 +26,22 @@ export class Dialog2Component {
   constructor(
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<Dialog2Component>,
-    @Inject(MAT_DIALOG_DATA) data: string) {}
+    @Inject(MAT_DIALOG_DATA) public data: string) {
+      this.name = data;
+    }
 
   onNoClick(): void {
     console.log("dialog 2 clicked");
     this.dialogRef.close();
   }
 
-    doNothing(): void {
-    
+  doNothing(): void {}
+
+  private checkIfYouAreMeant(): boolean {
+
+    const length = document.getElementsByClassName('mat-dialog-title').length;
+    const title = document.getElementsByClassName('mat-dialog-title')[length-1].innerHTML;
+    console.log('title ' + title + ' name ' + this.name);
+    return title === this.name;
   }
- }
+}
