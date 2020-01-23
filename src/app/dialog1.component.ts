@@ -10,10 +10,11 @@ import { Dialog2Component } from './dialog2.component';
 export class Dialog1Component {
 
   @Input() name: string;
+  private canBeClosed = false;
 
   @HostListener('window:keydown', ['$event'])
   keyDown(event: KeyboardEvent) {
-    if (event.keyCode === 13 &&  this.checkIfYouAreMeant()) {
+    if (event.keyCode === 13 &&  this.checkIfYouAreMeant()&& this.canBeClosed) {
       event.stopImmediatePropagation();
       this.onNoClick();
     }
@@ -23,22 +24,22 @@ export class Dialog1Component {
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<Dialog1Component>,
     @Inject(MAT_DIALOG_DATA) public data: string) {
-      console.log("dialog 1 " + data);
       this.name = data;
     }
 
   onNoClick(): void {
-    console.log("dialog 1 clicked");
+    console.log('close');
     this.dialogRef.close();
   }
 
   doNothing(): void {
-
+    console.log('doNothing');
   }
   
 
   openDialog() : void {
-    console.log("dialog 1 openDialog");
+    console.log("open");
+    this.canBeClosed = true;
     const dialogRef = this.dialog.open(Dialog2Component, {
       width: '150px',
       data: 'Kuh'
@@ -49,7 +50,6 @@ export class Dialog1Component {
 
     const length = document.getElementsByClassName('mat-dialog-title').length;
     const title = document.getElementsByClassName('mat-dialog-title')[length-1].innerHTML;
-    console.log('title ' + title + ' name ' + this.name);
     return title === this.name;
   }
  }
